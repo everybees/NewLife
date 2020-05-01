@@ -16,3 +16,14 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Article(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=250)
+    text = models.TextField()
+
+class Prayer(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.TextField()
+
+    
