@@ -1,0 +1,118 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content%}
+
+<div>
+        <nav class="navbar navbar-light fixed-top bg-light ">
+            <span class="navbar-brand mb-0 h1"><a href="index.html">LifeStream</a></span>
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <p> Welcome, {{ user.first_name }} </p>
+                </li>
+                <li class="nav-item">
+                    <li class="nav-item mr-3">
+                    <button type="button" class="btn btn-outline-primary"><a href="javascript:{document.getElementById('logout').submit()}">Logout</a></button>
+                    <form action="{% url 'logout'%}" method="POST" id="logout">
+                        {% csrf_token %}
+                        <input type ="hidden">
+                    </form>
+                    </li>
+                    <button type="button" class="btn btn-outline-primary"><a href="{% url 'posts' %}">+ Post an Article</a></button>
+                    <button type="button" class="btn btn-outline-primary"><a href="{% url 'prayer_request'%}">+ Post a Prayer Request</a></button>
+                </li>
+                
+            </ul>
+        </nav>
+
+    </div>
+
+
+    <div class="row" style="margin: 30px;">
+        <div class="col-md-2"> </div>
+
+        <div class="col-md-8 readAndPublish">
+            <h2>Read & Publish Exceptional Christain Articles</h2>
+            <p>When It Comes To Church Branding, You're Probably More Concerned With Building
+                A Website And Estblishing A Presence On Social Media.
+            </p>
+        </div>
+    </div>
+     
+    <section>
+        <div>
+            <ul class="list-items">
+                <li><a href="#">All</a></li>
+                <li><a href="#">Articles</a></li>
+                <li><a href="#">E-Books</a></li>
+                <li><a href="#">Videos</a></li>
+                <li><a href="#">Webinars</a></li>
+            <ul>
+
+        </div>
+        <div class="vectorImage">
+            <img src="{% static 'img/Vector 1.png'%}">
+        </div>
+        
+
+        <div class="container">
+            <div class="row row1Style">
+            {% if post %}
+                {% for posts in post%}
+                <div class="col-md-4 column1">
+                    <h2>{{posts.title}}</h2>
+                    <p class="text-muted h6">{{posts.author}} {{posts.published_date}}</p>
+                    <p> {{posts.text|slice:":200"}} </p>
+                    <button type="button">View Article</button>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class = "col-md-12">
+                    <p> No articles are available </p>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+
+        <div class="row searchDiv">
+            <div class="col-md-7">
+                <h2> Search through millions of Christian articles right on your plan </h2>
+                <button type="button">Register</button>
+            </div>
+
+            <div class="col-md-5">
+                <img src="{% static 'img/HoldingPhone.png'%}">
+
+            </div>
+
+        </div>
+
+        <div class="row containerFormDiv">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"> 
+                    <h3 class="text-center contactUs">Contact us</h3>
+
+                    <form class="containerForm"  method="POST">
+                        {% csrf_token %}
+                        {% if user.is_authenticated %}
+                            <input type="hidden" name="user_id" value={{user.id}}>
+                        {% else %}
+                            <input type="hidden" name="user_id" value="0">
+                        {% endif %}
+                        <input type="text" name="fullname" id="fullname" class="form-control" {% if user.is_authenticated %} value={{user.first_name}} {{user.last_name}} {% endif %} placeholder="Full Name">
+                        <input type="text" name="fullname" id="email" class="form-control" {% if user.is_authenticated %} value={{user.email}} {% endif %} placeholder="Email Address">
+                        <input type="text" name="fullname" id="message"  placeholder="Drop A Message">
+
+                        <input type="submit" value="Send A Message">
+                    </form>
+                    
+            </div>
+           
+        </div>
+    
+        <div class="endOfPageDiv">
+
+        </div>
+    </section>
+{% endblock %}
+
+    

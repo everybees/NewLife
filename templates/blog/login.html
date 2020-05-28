@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content%}
+
+     <div>
+                <nav class="navbar navbar-light fixed-top bg-light ">
+                    <span class="navbar-brand mb-0 h1"><a href="index.html">LifeStream</a></span>
+                    <ul class="nav justify-content-end">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Create an account</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 column1">
+                        <h2>
+                            Whoever is of God hears the words of God. 
+                            The reason why you do not hear them is that you are not of God. <br><br>
+                            John 8:47 
+                        </h2>
+                        
+                    </div>
+
+                    <div class="col-md-6 signUpFormDiv">
+                        <h3 class="text-center signUp">Login</h3>
+                        {% include 'partials/_alert.html'%}
+                        <form class="signUpForm" method="POST" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <input type="text" name="username" id="username" placeholder="Full Name">
+                            <input type="password" name="password" id="password" placeholder="Password">
+                        
+                            <input type="submit" value="Login">
+                        </form>
+                    </div>
+                    <div>
+                        <a href= "{% url 'password_reset' %}"> Forgot Password? </a>
+                    </div>
+
+                </div>
+            </div>
+
+{% endblock %}

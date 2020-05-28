@@ -1,4 +1,158 @@
 {% extends 'base.html' %}
+
 {% block content %}
+{% load static %}
+  <div>
+        <nav class="navbar navbar-light fixed-top bg-light ">
+            <span class="navbar-brand mb-0 h1"><a href="{% url 'index' %}">LifeStream</a></span>
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <button type="button" class="btn btn-outline-primary"><a href="{% url 'register' %}">Register</a></button>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div class="row" style="margin: 30px;">
+        <div class="col-md-2"> </div>
+
+        <div class="col-md-8 readAndPublish">
+            <h2>Read & Publish Exceptional Christain Articles</h2>
+            <p>When It Comes To Church Branding, You're Probably More Concerned With Building
+                A Website And Estblishing A Presence On Social Media.
+            </p>
+        </div>
+    </div>
+     
+    <section>
+        <div>
+            <ul class="list-items">
+                <li><a href="all.html">All</a></li>
+                <li><a href="#">Articles</a></li>
+                <li><a href="#">E-Books</a></li>
+                <li><a href="#">Videos</a></li>
+                <li><a href="#">Webinars</a></li>
+            <ul>
+
+        </div>
+        <div class="vectorImage">
+            <img src="{% static 'img/Vector 1.png'%}">
+        </div>
+        
+        <div class="container">
+            <div class="row">
+             {% if post %}
+                {% for posts in post%}
+                    <div class="col-md-4 column3">
+
+                    <h2>{{posts.title}}</h2>
+                    <p class="text-muted h6"> {{ posts.author }} | {{ posts.published_date}}</p>
+                    <p> {{posts.text|slice:":200"}}</p>
+                    <button type="button" style="margin-left: 4%;"><a href="{% url 'post_detail' posts.slug  %}">View Article </a></button>
+
+                </div>
+
+                {% endfor %}
+
+             {% else %}
+                <div class= "col-md-12">
+                    <p> No Articles are available </p>
+                </div>
+
+             {% endif %}                
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {% if posts.has_other_pages %}
+                    <ul class="pagination">
+                        {% if posts.has_previous%}
+                            <li class="page-item">
+                                <a href="?page={{posts.previous_page_number}}" class="page-link">&laquo;
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link">&laquo;</a>
+                            </li>
+                        {% endif %}
+                        {% for i in posts.paginator.page_range %}
+                            {% if posts.number == i %}
+                                <li class="page-item active">
+                                    <a class="page-link">{{i}}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a href="?page={{i}}"class="page-link">{{i}}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if posts.has_next%}
+                            <li class="page-item">
+                                <a href="?page={{posts.next_page_number}}" class="page-link">&raquo;
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link">&raquo;</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        
+
+        
+
+        <div class="row searchDiv">
+            <div class="col-md-7">
+                <h2> Search through millions of Christian articles right on your palm </h2>
+                <button type="button"><a href="{% url 'register' %}">Register</a></button>
+            </div>
+
+            <div class="col-md-5">
+                <img src="{% static 'img/HoldingPhone.png'%}">
+
+            </div>
+
+        </div>
+
+            
+
+        <div class="row containerFormDiv">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"> 
+                    <h3 class="text-center contactUs">Contact us</h3>
+
+                    <form class="containerForm" action="{% url 'contact'%}" method="POST">
+                        {% csrf_token %}
+                        {% if user.is_authenticated %}
+                            <input type="hidden" name="user_id" value={{user.id}}>
+                        {% else %}
+                            <input type="hidden" name="user_id" value="0">
+                        {% endif %}
+                        <input type="text" name="fullname" id="fullname" class="form-control"  placeholder="Full Name">
+                        <input type="text" name="email" id="email" class="form-control" placeholder="Email Address">
+                        <input type="text" name="message" id="message" class="form-control" placeholder="Drop A Message">
+
+                        <input type="submit" value="Send A Message">
+                    </form>
+                    
+            </div>
+           
+        </div>
     
+        <div class="endOfPageDiv">
+        
+
+        </div>
+    </section>
+
+ 
 {% endblock %}

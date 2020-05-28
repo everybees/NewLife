@@ -1,0 +1,41 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content%} 
+    <div>
+            <nav class="navbar navbar-light fixed-top bg-light ">
+                <span class="navbar-brand mb-0 h1"><a href="{% url 'index' %}">LifeStream</a></span>
+                <ul class="nav justify-content-end">
+                    {% comment %} <li class="nav-item">
+                        <button type="button" class="btn btn-outline-primary">Save</button>
+                    </li> {% endcomment %}
+                    <li class="nav-item">
+                        <img src="{% static 'img/Ellipse 2.png'%}">
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <div class="row container">
+            <div class="col-md-9"> 
+                {% include 'partials/_alert.html'%}
+
+                    <form class="postForm" action="{% url 'articles' %}" method="POST">
+                        {% csrf_token %}
+                        {% if user.is_authenticated %}
+                            <input type="hidden" name="user_id" value={{user.id}}>
+                        {% else %}
+                            <input type="hidden" name="user_id" value="0">
+                        {% endif %}
+                        <input type ="text" name= "author" id="author" {% if user.is_authenticated %} value={{user.username}} {% endif %} placeholder="Author">
+                        <p> <small> We want to give you the credits for your work </small> </p>
+                        <input type="text" name="title" id="title"  placeholder="Title">
+                        <textarea type="text" name="article" id="article" placeholder="Write Articles"></textarea>
+                        <input type="submit" value="Post Your Article">
+
+                    </form>
+                    
+            </div>
+        
+        </div>
+{% endblock %}

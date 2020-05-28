@@ -1,0 +1,29 @@
+
+.postForm {
+    padding: 25px;
+    width: 100%;
+    margin: 30px;
+}
+
+.postForm input[type = text]{
+    font-size: small;
+    opacity: 0.5;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.postForm textarea{
+  width: 85%;
+  height: 200px;
+  font-size: small;
+  opacity: 0.5;
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  
+}

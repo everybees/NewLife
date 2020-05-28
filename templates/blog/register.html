@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content%}
+    <div>
+                <nav class="navbar navbar-light fixed-top bg-light ">
+                    <span class="navbar-brand mb-0 h1"><a href="index.html">LifeStream</a></span>
+                    <ul class="nav justify-content-end">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">I Already Have An Account Login</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 column1">
+                        <h2>
+                            He replied, “Blessed rather are those who hear the word of God and obey it.” <br><br>
+                            Luke 11:28
+                        </h2>
+                        
+                    </div>
+
+                    <div class="col-md-6 signUpFormDiv">
+                        {% include 'partials/_alert.html'%}
+                        <h3 class="text-center signUp">Sign-Up</h3>
+                        {% include 'partials/_alert.html'%}
+                        <form class="signUpForm" method="POST" action="{% url 'register' %}">
+                            {% csrf_token %}
+                        <input type="text" name="first_name" id="first_name" placeholder="First Name" required>
+                        <input type="text" name="last_name" id="last_name" placeholder= "Last Name" required>
+                        <input type="text" name="username" id="username" placeholder="username" required>
+                        <input type="text" name="email" id="email" placeholder="Email Address" required>
+                        <input type="password" name="password" id="password" placeholder="Password" required>
+                        <input type="password" name="password2" id="password2" placeholder="Confirm Password" required>
+
+                        <input type="submit" value="Sign Up">
+                    </form>
+                        
+                </div>
+
+            </div>
+        </div>
+{% endblock %}
+
