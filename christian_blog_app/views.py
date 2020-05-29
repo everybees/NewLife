@@ -44,26 +44,15 @@ from django.contrib.auth.models import User
 from xml.dom import minidom
 from django.db.models import Count
 import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 import smtplib
 from christian_blog.settings import EMAIL_HOST_USER
-from .import forms
-            
-fromaddr='django.registeractivate@gmail.com'
-username='django.registeractivate'
-password='django_register_activate'
-
 
 # Create your views here.
 class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-published_date')
     template_name = 'index.html'
 
-def testing(request):
-    return render(request, 'blog/testing.html')
 def index(request):
     post = Post.objects.all()
     paginator = Paginator(post, 3)
@@ -332,19 +321,3 @@ def activate(request):
 	user.save()
 	return render(request,'activation.html')
     
-def send_email(toaddr,id):
-	text = "Hi!\nHow are you?\nHere is the link to activate your account:\nhttp://127.0.0.1:8005/blog/activation/?id=%s" %(id)
-	# Record the MIME types of both parts - text/plain and text/html.
-	part1 = MIMEText(text, 'plain')
-	msg = MIMEMultipart('alternative')
-	msg.attach(part1)
-	subject="Activate your account at Family Host"
-	msg="""\From: %s\nTo: %s\nSubject: %s\n\n%s""" %(fromaddr,toaddr,subject,msg.as_string())
-	#Use gmail's smtp server to send email. However, you need to turn on the setting "lesssecureapps" following this link:
-	#https://www.google.com/settings/security/lesssecureapps
-	server = smtplib.SMTP('smtp.gmail.com:587')
-	server.ehlo()
-	server.starttls()
-	server.login(username,password)
-	server.sendmail(fromaddr,[toaddr],msg)
-	server.quit()

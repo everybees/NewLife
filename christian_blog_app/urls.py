@@ -16,7 +16,6 @@ urlpatterns = [
     path('prayers', views.prayers,name='prayers' ),
     path('prayer_request', views.prayers, name='prayer_request'),
     path('<slug:slug>/', views.post_detail, name='post_detail'),
-    path('testing', views.testing, name='testing'),
     path('activation',views.activate, name='activation'),
 
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name='registration/password_change_done.html'), 
